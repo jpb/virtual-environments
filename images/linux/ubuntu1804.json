@@ -49,9 +49,27 @@
             "image_offer": "UbuntuServer",
             "image_sku": "18.04-LTS",
             "os_disk_size_gb": "86"
+        },
+        {
+            "type": "docker",
+            "image": "ubuntu:18.04",
+            "commit": true
         }
     ],
     "provisioners": [
+        {
+            "type": "shell",
+            "only": ["docker"],
+            "inline": [
+              "apt-get update",
+              "apt-get install -y sudo curl lsb-release rsync wget",
+              "curl --silent --show-error --location https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz --output /tmp/docker.tar.gz",
+              "tar -C /usr/local/bin -xzf /tmp/docker.tar.gz --strip-components 1",
+              "rm /tmp/docker.tar.gz",
+              "curl --silent --show-error --location https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64 --output /usr/local/bin/docker-compose",
+              "chmod +x /usr/local/bin/docker-compose"
+            ]
+        },
         {
             "type": "shell",
             "inline": [
@@ -76,11 +94,24 @@
             "type": "shell",
             "inline": [
                 "apt-get update",
-                "apt-get dist-upgrade -y",
+                "apt-get dist-upgrade -y"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "only": ["azure-arm"],
+            "inline": [
                 "systemctl disable apt-daily.service",
                 "systemctl disable apt-daily.timer",
                 "systemctl disable apt-daily-upgrade.timer",
-                "systemctl disable apt-daily-upgrade.service",
+                "systemctl disable apt-daily-upgrade.service"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "inline": [
                 "echo '* soft nofile 65536 \n* hard nofile 65536' >> /etc/security/limits.conf",
                 "echo 'session required pam_limits.so' >> /etc/pam.d/common-session",
                 "echo 'session required pam_limits.so' >> /etc/pam.d/common-session-noninteractive",
@@ -131,9 +162,32 @@
                 "{{template_dir}}/scripts/installers/aws.sh",
                 "{{template_dir}}/scripts/installers/build-essential.sh",
                 "{{template_dir}}/scripts/installers/clang.sh",
-                "{{template_dir}}/scripts/installers/cmake.sh",
+                "{{template_dir}}/scripts/installers/cmake.sh"
+            ],
+            "environment_vars": [
+                "METADATA_FILE={{user `metadata_file`}}",
+                "HELPER_SCRIPTS={{user `helper_script_folder`}}",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "only": ["azure-arm"],
+            "scripts": [
                 "{{template_dir}}/scripts/installers/docker-compose.sh",
-                "{{template_dir}}/scripts/installers/docker-moby.sh",
+                "{{template_dir}}/scripts/installers/docker-moby.sh"
+            ],
+            "environment_vars": [
+                "METADATA_FILE={{user `metadata_file`}}",
+                "HELPER_SCRIPTS={{user `helper_script_folder`}}",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'"
+        },
+        {
+            "type": "shell",
+            "scripts": [
                 "{{template_dir}}/scripts/installers/dotnetcore-sdk.sh",
                 "{{template_dir}}/scripts/installers/erlang.sh",
                 "{{template_dir}}/scripts/installers/firefox.sh",
