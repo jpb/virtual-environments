@@ -70,7 +70,7 @@
             "only": ["docker"],
             "inline": [
               "apt-get update",
-              "apt-get install -y sudo curl lsb-release rsync wget",
+              "apt-get install -y apt-utils sudo curl lsb-release rsync wget",
               "curl --silent --show-error --location https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz --output /tmp/docker.tar.gz",
               "tar -C /usr/local/bin -xzf /tmp/docker.tar.gz --strip-components 1",
               "rm /tmp/docker.tar.gz",
