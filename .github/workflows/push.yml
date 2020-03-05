@@ -10,3 +10,4 @@ jobs:
           curl -O https://releases.hashicorp.com/packer/1.5.4/packer_1.5.4_linux_amd64.zip
           unzip packer_1.5.4_linux_amd64.zip
           ./packer build -only docker -var github_feed_token="${GITHUB_TOKEN}" images/linux/ubuntu1804.json
+          docker images actions-virtual-environment

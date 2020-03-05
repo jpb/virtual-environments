@@ -56,6 +56,14 @@
             "commit": true
         }
     ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "only": ["docker"],
+            "repository": "unbounce/actions-virtual-environment",
+            "tag": "18.04"
+        }
+    ],
     "provisioners": [
         {
             "type": "shell",
