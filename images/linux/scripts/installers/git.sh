@@ -9,6 +9,8 @@ source $HELPER_SCRIPTS/document.sh
 
 ## Install git
 add-apt-repository ppa:git-core/ppa -y
+# TODO don't hard code
+apt-key adv --recv-keys --keyserver keyserver.ubuntu.com A1715D88E1DF1F24
 apt-get update
 apt-get install git -y
 git --version

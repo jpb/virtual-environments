@@ -162,10 +162,6 @@
             "scripts": [
                 "{{template_dir}}/scripts/installers/7-zip.sh",
                 "{{template_dir}}/scripts/installers/ansible.sh",
-                "{{template_dir}}/scripts/installers/azcopy.sh",
-                "{{template_dir}}/scripts/installers/azure-cli.sh",
-                "{{template_dir}}/scripts/installers/azure-devops-cli.sh",
-                "{{template_dir}}/scripts/installers/bazel.sh",
                 "{{template_dir}}/scripts/installers/1804/basic.sh",
                 "{{template_dir}}/scripts/installers/aws.sh",
                 "{{template_dir}}/scripts/installers/build-essential.sh",
@@ -196,23 +192,17 @@
         {
             "type": "shell",
             "scripts": [
-                "{{template_dir}}/scripts/installers/erlang.sh",
                 "{{template_dir}}/scripts/installers/firefox.sh",
                 "{{template_dir}}/scripts/installers/gcc.sh",
                 "{{template_dir}}/scripts/installers/git.sh",
                 "{{template_dir}}/scripts/installers/1804/go.sh",
-                "{{template_dir}}/scripts/installers/google-chrome.sh",
-                "{{template_dir}}/scripts/installers/heroku.sh",
                 "{{template_dir}}/scripts/installers/image-magick.sh",
                 "{{template_dir}}/scripts/installers/java-tools.sh",
                 "{{template_dir}}/scripts/installers/1804/kubernetes-tools.sh",
                 "{{template_dir}}/scripts/installers/leiningen.sh",
-                "{{template_dir}}/scripts/installers/miniconda.sh",
                 "{{template_dir}}/scripts/installers/mysql.sh",
                 "{{template_dir}}/scripts/installers/nodejs.sh",
                 "{{template_dir}}/scripts/installers/phantomjs.sh",
-                "{{template_dir}}/scripts/installers/1804/php.sh",
-                "{{template_dir}}/scripts/installers/pollinate.sh",
                 "{{template_dir}}/scripts/installers/postgresql.sh",
                 "{{template_dir}}/scripts/installers/ruby.sh",
                 "{{template_dir}}/scripts/installers/selenium.sh",
@@ -236,9 +226,6 @@
         {
             "type": "shell",
             "scripts":[
-                "{{template_dir}}/scripts/installers/1804/android.sh",
-                "{{template_dir}}/scripts/installers/azpowershell.sh",
-                "{{template_dir}}/scripts/helpers/containercache.sh",
                 "{{template_dir}}/scripts/installers/hosted-tool-cache.sh",
                 "{{template_dir}}/scripts/installers/python.sh",
                 "{{template_dir}}/scripts/installers/test-toolcache.sh"
@@ -294,6 +281,7 @@
         },
         {
             "type": "shell",
+            "only": ["azure-arm"],
             "inline": [
                 "sleep 30",
                 "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
